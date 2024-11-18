@@ -1,6 +1,7 @@
-package es.iesjandula.VideoClubs.models;
+package es.iesjandula.video_clubs.models;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -20,5 +21,7 @@ public class RentId implements Serializable
 	private long userId;
 	
 	private long movieId;
+	
+	private Date fecha;
 
 }

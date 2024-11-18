@@ -1,4 +1,4 @@
-package es.iesjandula.VideoClubs.utils;
+package es.iesjandula.video_clubs.utils;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,12 +17,14 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.iesjandula.VideoClubs.models.Movie;
-import es.iesjandula.VideoClubs.models.Users;
-import es.iesjandula.VideoClubs.repository.MovieRepository;
-import es.iesjandula.VideoClubs.repository.UsersRepository;
+import es.iesjandula.video_clubs.models.Movie;
+import es.iesjandula.video_clubs.models.Users;
+import es.iesjandula.video_clubs.repository.MovieRepository;
+import es.iesjandula.video_clubs.repository.UsersRepository;
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @RequestMapping(value = "/videoclub", produces = {"application/json"})
 @RestController
 public class RestHandler 
@@ -40,18 +42,43 @@ public class RestHandler
 	 * @throws StreamReadException */
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/movie")
-	public ResponseEntity<?> uploadMovies(@RequestBody(required = true) MultipartFile jsonFile) throws MovieError 
+	public ResponseEntity<?> uploadMovies(@RequestBody(required = true) MultipartFile jsonFile) 
 	{
 		try 
 		{
-            List<Movie> movies = new ObjectMapper().readValue(jsonFile.getBytes(), List.class);
-            movieRepository.saveAll(movies);
+            List<Movie> movies = (List<Movie>) new ObjectMapper().readValue(jsonFile.getBytes(), List.class);
+            
+            if (movies.isEmpty())
+            {
+            	String errorString = "La lista de películas está vacía" ;
+            	log.error(errorString) ;
+            	
+            	throw new MovieError(1, errorString) ;
+            }
+            
+            this.movieRepository.saveAll(movies);
             return ResponseEntity.ok("Películas guardadas correctamente en la base de datos.");
         } 
 		catch (IOException ioException) 
 		{
-            return ResponseEntity.status(400).body("Error al procesar el archivo JSON.");
-        }	
+			String errorString = "La lista de películas no tiene el formato correcto" ;
+			MovieError movieError = new MovieError(1, errorString, ioException) ;
+			
+			log.error(errorString, ioException) ;
+            return ResponseEntity.status(400).body(movieError.getBodyExceptionMessage());
+        }
+		catch (MovieError movieError)
+		{
+			return ResponseEntity.status(401).body(movieError.getBodyExceptionMessage());
+		}	
+		catch (Exception exception) 
+		{
+			String errorString = "Error al leer las peliculas" ;
+			MovieError movieError = new MovieError(1, errorString, exception) ;
+			
+			log.error(errorString, exception) ;
+            return ResponseEntity.status(400).body(movieError.getBodyExceptionMessage());
+        }
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/movie")

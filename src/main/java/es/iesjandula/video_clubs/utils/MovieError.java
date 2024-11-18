@@ -1,4 +1,4 @@
-package es.iesjandula.VideoClubs.utils;
+package es.iesjandula.video_clubs.utils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package es.iesjandula.VideoClubs;
+package es.iesjandula.video_clubs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

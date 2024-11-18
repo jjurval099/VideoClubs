@@ -1,8 +1,8 @@
-package es.iesjandula.VideoClubs.repository;
+package es.iesjandula.video_clubs.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import es.iesjandula.VideoClubs.models.Users;
+import es.iesjandula.video_clubs.models.Users;
 
 public interface UsersRepository extends JpaRepository<Users, Long>
 {

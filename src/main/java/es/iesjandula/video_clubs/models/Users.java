@@ -1,4 +1,4 @@
-package es.iesjandula.VideoClubs.models;
+package es.iesjandula.video_clubs.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
