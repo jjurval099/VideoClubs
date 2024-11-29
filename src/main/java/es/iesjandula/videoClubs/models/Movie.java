@@ -1,4 +1,4 @@
-package es.iesjandula.video_clubs.models;
+package es.iesjandula.videoClubs.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,14 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user")
-public class Users
+@Table(name="movie")
+public class Movie 
 {
+	
 	@Id
 	@Column(length = 10, nullable = false)
-	private long userId;
+	private long movieId;
 	
-	@Column(length = 10, nullable = false)
-	private String userName;
+	@Column(length = 50, nullable = false)
+	private String title;
+	
+	@Column(length = 6, nullable = false)
+	private String duration;
 
 }

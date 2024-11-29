@@ -1,4 +1,4 @@
-package es.iesjandula.video_clubs.models;
+package es.iesjandula.videoClubs.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 @Table(name="rent")
 public class Rent
 {

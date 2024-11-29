@@ -1,4 +1,4 @@
-package es.iesjandula.video_clubs.models;
+package es.iesjandula.videoClubs.models;
 
 import java.io.Serializable;
 import java.sql.Date;
